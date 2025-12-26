@@ -150,8 +150,8 @@ const placeOrder = () => {
   display: inline-block;
   padding: 6px 10px;
   border-radius: 999px;
-  background: rgba(99, 230, 190, 0.1);
-  color: #63e6be;
+  background: rgba(0, 255, 209, 0.12);
+  color: var(--night-accent);
   font-weight: 700;
   font-size: 12px;
   text-transform: uppercase;
@@ -164,8 +164,8 @@ const placeOrder = () => {
 
 .empty {
   margin-top: 12px;
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: var(--night-surface);
+  border: 1px solid var(--night-border);
   border-radius: 14px;
   padding: 14px;
   display: flex;
@@ -174,8 +174,8 @@ const placeOrder = () => {
 }
 
 .panel {
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: var(--night-surface);
+  border: 1px solid var(--night-border);
   border-radius: 16px;
   padding: 16px;
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
@@ -255,8 +255,8 @@ const placeOrder = () => {
 .summary__item {
   display: flex;
   justify-content: space-between;
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(12, 10, 24, 0.55);
+  border: 1px solid var(--night-border);
   border-radius: 12px;
   padding: 10px;
 }

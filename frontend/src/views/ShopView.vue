@@ -214,8 +214,8 @@ onMounted(async () => {
 }
 
 .panel {
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: var(--night-surface);
+  border: 1px solid var(--night-border);
   border-radius: 16px;
   padding: 16px;
   height: fit-content;
@@ -249,8 +249,8 @@ onMounted(async () => {
   display: inline-block;
   padding: 6px 10px;
   border-radius: 999px;
-  background: rgba(99, 230, 190, 0.1);
-  color: #63e6be;
+  background: rgba(0, 255, 209, 0.12);
+  color: var(--night-accent);
   font-weight: 700;
   font-size: 12px;
   text-transform: uppercase;
@@ -266,8 +266,8 @@ onMounted(async () => {
   margin-top: 12px;
   padding: 10px;
   border-radius: 12px;
-  background: rgba(255, 255, 255, 0.02);
-  border: 1px solid rgba(255, 255, 255, 0.06);
+  background: rgba(12, 10, 24, 0.55);
+  border: 1px solid var(--night-border);
 }
 
 .filter__label {
@@ -288,7 +288,7 @@ onMounted(async () => {
 
 .filter input[type='range'] {
   width: 100%;
-  accent-color: #63e6be;
+  accent-color: var(--night-accent-strong);
 }
 
 .filter input[type='number'],
@@ -323,8 +323,8 @@ onMounted(async () => {
 }
 
 .products {
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  background: rgba(12, 10, 24, 0.55);
+  border: 1px solid var(--night-border);
   border-radius: 18px;
   padding: 18px;
 }
@@ -371,9 +371,9 @@ onMounted(async () => {
   position: relative;
   border-radius: 16px;
   padding: 14px;
-  background: linear-gradient(150deg, rgba(99, 230, 190, 0.12), rgba(79, 195, 255, 0.08));
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08), 0 20px 40px rgba(12, 16, 27, 0.45);
+  background: linear-gradient(150deg, rgba(0, 255, 209, 0.08), rgba(255, 77, 255, 0.08));
+  border: 1px solid var(--night-border);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08), 0 20px 40px rgba(6, 5, 15, 0.6);
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -385,8 +385,8 @@ onMounted(async () => {
   right: 10px;
   padding: 6px 10px;
   border-radius: 10px;
-  background: #0c101b;
-  color: #63e6be;
+  background: #05050b;
+  color: var(--night-accent);
   font-weight: 800;
   font-size: 12px;
 }

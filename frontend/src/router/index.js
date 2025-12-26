@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import CartView from '../views/CartView.vue'
 import CheckoutView from '../views/CheckoutView.vue'
 import ContactView from '../views/ContactView.vue'
+import GearView from '../views/GearView.vue'
 import ShopView from '../views/ShopView.vue'
 
 const router = createRouter({
@@ -16,6 +17,11 @@ const router = createRouter({
       path: '/contact',
       name: 'contact',
       component: ContactView,
+    },
+    {
+      path: '/gear',
+      name: 'gear',
+      component: GearView,
     },
     {
       path: '/cart',
