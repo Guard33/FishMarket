@@ -1,5 +1,15 @@
 C:\Github-repos\FishMarket\backend\src\main\java\com\fishmarket\config\DataSeeder.java
-C:\Github-repos\FishMarket\backend\src\main\java\com\fishmarket\FishMarketApplication.java
+C:\Github-repos\FishMarket\backend\src\main\java\com\fishmarket\repository\UserAccountRepository.java
+C:\Github-repos\FishMarket\backend\src\main\java\com\fishmarket\security\SecurityConfig.java
+C:\Github-repos\FishMarket\backend\src\main\java\com\fishmarket\controller\GearController.java
+C:\Github-repos\FishMarket\backend\src\main\java\com\fishmarket\controller\AuthController.java
 C:\Github-repos\FishMarket\backend\src\main\java\com\fishmarket\model\Fish.java
 C:\Github-repos\FishMarket\backend\src\main\java\com\fishmarket\controller\FishController.java
+C:\Github-repos\FishMarket\backend\src\main\java\com\fishmarket\model\GearItem.java
 C:\Github-repos\FishMarket\backend\src\main\java\com\fishmarket\repository\FishRepository.java
+C:\Github-repos\FishMarket\backend\src\main\java\com\fishmarket\controller\CartController.java
+C:\Github-repos\FishMarket\backend\src\main\java\com\fishmarket\FishMarketApplication.java
+C:\Github-repos\FishMarket\backend\src\main\java\com\fishmarket\repository\GearItemRepository.java
+C:\Github-repos\FishMarket\backend\src\main\java\com\fishmarket\model\UserAccount.java
+C:\Github-repos\FishMarket\backend\src\main\java\com\fishmarket\security\JwtService.java
+C:\Github-repos\FishMarket\backend\src\main\java\com\fishmarket\security\JwtAuthFilter.java

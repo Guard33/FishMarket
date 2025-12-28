@@ -1,5 +1,0 @@
-com\fishmarket\controller\FishController.class
-com\fishmarket\config\DataSeeder.class
-com\fishmarket\FishMarketApplication.class
-com\fishmarket\repository\FishRepository.class
-com\fishmarket\model\Fish.class
