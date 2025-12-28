@@ -28,6 +28,7 @@ const removeFromCart = (id) => {
 
 const clearCart = () => {
   cartItems.value = []
+  localStorage.removeItem('cart_items')
 }
 
 const hydrateFromStorage = () => {
@@ -103,7 +104,7 @@ export function useCart() {
             })
             .catch(() => {})
         } else {
-          hydrateFromStorage()
+          clearCart()
         }
       },
     )

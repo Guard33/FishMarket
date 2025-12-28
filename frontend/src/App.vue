@@ -1,11 +1,13 @@
 <script setup>
-import { computed, onMounted, ref } from 'vue'
+import { computed, onMounted, ref, nextTick, watch } from 'vue'
 import { RouterLink, RouterView, useRoute } from 'vue-router'
 import { useAuth } from './composables/useAuth'
+import { useCart } from './composables/useCart'
 import logoUrl from './assets/fishmarket-logo.png'
 
 const route = useRoute()
 const { authUser, initGoogleButton, isAuthenticated, signOut } = useAuth()
+const { clearCart } = useCart()
 const authError = ref('')
 
 const navLinks = [
@@ -26,6 +28,23 @@ onMounted(() => {
     authError.value = message
   })
 })
+
+watch(
+  () => isAuthenticated.value,
+  async (value) => {
+    if (!value) {
+      await nextTick()
+      initGoogleButton('google-signin', (message) => {
+        authError.value = message
+      })
+    }
+  },
+)
+
+const handleSignOut = () => {
+  clearCart()
+  signOut()
+}
 </script>
 
 <template>
@@ -59,7 +78,7 @@ onMounted(() => {
               <img v-if="authUser?.avatarUrl" :src="authUser.avatarUrl" alt="" class="auth__avatar" />
               <div>
                 <p class="auth__name">{{ authUser?.name || 'Dock Crew' }}</p>
-                <button class="auth__logout" @click="signOut">Sign out</button>
+                <button class="auth__logout" @click="handleSignOut">Sign out</button>
               </div>
             </div>
             <p v-if="authError" class="auth__error">{{ authError }}</p>

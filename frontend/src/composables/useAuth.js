@@ -22,6 +22,9 @@ const clearAuth = () => {
   authUser.value = null
   localStorage.removeItem('auth_token')
   localStorage.removeItem('auth_user')
+  if (window.google?.accounts?.id?.disableAutoSelect) {
+    window.google.accounts.id.disableAutoSelect()
+  }
 }
 
 const authorizedFetch = (path, options = {}) => {
@@ -73,6 +76,11 @@ const initGoogleButton = async (elementId, onError) => {
       onError?.('Google Identity Services unavailable.')
       return
     }
+    const target = document.getElementById(elementId)
+    if (!target) {
+      return
+    }
+    target.innerHTML = ''
     window.google.accounts.id.initialize({
       client_id: googleClientId,
       callback: async (response) => {
@@ -83,7 +91,7 @@ const initGoogleButton = async (elementId, onError) => {
         }
       },
     })
-    window.google.accounts.id.renderButton(document.getElementById(elementId), {
+    window.google.accounts.id.renderButton(target, {
       theme: 'filled_black',
       size: 'large',
       shape: 'pill',
