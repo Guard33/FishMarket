@@ -1,42 +1,24 @@
 <script setup>
-const gearInventory = [
-  {
-    id: 'nightline-rod',
-    name: 'Nightline Carbon Rod',
-    price: 189,
-    notes: 'Ultra-light carbon fiber, 7 ft, fast action',
-  },
-  {
-    id: 'tidecaster-reel',
-    name: 'Tidecaster 3000 Reel',
-    price: 149,
-    notes: 'Sealed drag, saltwater-ready, 10+1 bearings',
-  },
-  {
-    id: 'glowjet-lures',
-    name: 'Glowjet Lure Set',
-    price: 42,
-    notes: 'Bioluminescent soft plastics for night bites',
-  },
-  {
-    id: 'harborline-braid',
-    name: 'Harborline Braid',
-    price: 24,
-    notes: '30 lb test, stealth green, 300 yd spool',
-  },
-  {
-    id: 'shorelantern',
-    name: 'Shore Lantern Headlamp',
-    price: 38,
-    notes: 'Red light mode, rechargeable, 350 lumens',
-  },
-  {
-    id: 'dockbox',
-    name: 'Dockside Tackle Box',
-    price: 65,
-    notes: 'Modular trays, waterproof seal, carry strap',
-  },
-]
+import { onMounted, ref } from 'vue'
+import { apiBaseUrl } from '../composables/useAuth'
+
+const gearInventory = ref([])
+const loading = ref(true)
+const error = ref('')
+
+onMounted(async () => {
+  try {
+    const response = await fetch(`${apiBaseUrl}/api/gear`)
+    if (!response.ok) {
+      throw new Error('Unable to load fishing gear.')
+    }
+    gearInventory.value = await response.json()
+  } catch (err) {
+    error.value = err instanceof Error ? err.message : 'Unable to load fishing gear.'
+  } finally {
+    loading.value = false
+  }
+})
 </script>
 
 <template>
@@ -44,15 +26,17 @@ const gearInventory = [
     <div class="gear__header">
       <div>
         <p class="pill">Fishing gear</p>
-        <h2>Night market essentials</h2>
+        <h2>Harbor-ready essentials</h2>
         <p class="lede">
-          Rods, reels, and neon-ready tackle curated for late tide runs.
+          Rods, reels, and tackle curated for everyday coastal runs.
         </p>
       </div>
-      <div class="gear__glow">Open till dawn</div>
+      <div class="gear__glow">Dockside favorites</div>
     </div>
 
-    <div class="gear__grid">
+    <div v-if="loading" class="status">Loading gear...</div>
+    <div v-else-if="error" class="status status--error">{{ error }}</div>
+    <div v-else class="gear__grid">
       <article v-for="item in gearInventory" :key="item.id" class="gear-card">
         <div class="gear-card__price">${{ item.price }}</div>
         <h3 class="gear-card__title">{{ item.name }}</h3>
@@ -65,11 +49,11 @@ const gearInventory = [
 
 <style scoped>
 .gear {
-  background: rgba(12, 10, 24, 0.6);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: #ffffff;
+  border: 1px solid var(--night-border);
   border-radius: 18px;
   padding: 20px;
-  box-shadow: 0 20px 40px rgba(6, 5, 15, 0.6);
+  box-shadow: 0 20px 40px rgba(31, 27, 23, 0.12);
 }
 
 .gear__header {
@@ -83,8 +67,8 @@ const gearInventory = [
 .gear__glow {
   padding: 10px 16px;
   border-radius: 999px;
-  background: linear-gradient(120deg, rgba(0, 255, 209, 0.2), rgba(255, 77, 255, 0.15));
-  color: #9fffe8;
+  background: linear-gradient(120deg, rgba(15, 143, 138, 0.2), rgba(201, 109, 96, 0.12));
+  color: #2f2822;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.12em;
@@ -95,8 +79,8 @@ const gearInventory = [
   display: inline-block;
   padding: 6px 10px;
   border-radius: 999px;
-  background: rgba(0, 255, 209, 0.12);
-  color: #7affd8;
+  background: rgba(15, 143, 138, 0.12);
+  color: var(--night-accent);
   font-weight: 700;
   font-size: 12px;
   text-transform: uppercase;
@@ -104,7 +88,7 @@ const gearInventory = [
 }
 
 .lede {
-  color: #b5c4e8;
+  color: var(--night-muted);
   max-width: 520px;
 }
 
@@ -114,12 +98,26 @@ const gearInventory = [
   gap: 14px;
 }
 
+.status {
+  padding: 18px;
+  border-radius: 14px;
+  background: #ffffff;
+  border: 1px solid var(--night-border);
+  color: var(--night-muted);
+  font-weight: 600;
+}
+
+.status--error {
+  color: #ffb4b4;
+  border-color: rgba(255, 180, 180, 0.4);
+}
+
 .gear-card {
   padding: 16px;
   border-radius: 16px;
-  background: linear-gradient(150deg, rgba(18, 22, 40, 0.9), rgba(20, 10, 35, 0.8));
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  background: #ffffff;
+  border: 1px solid var(--night-border);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.5);
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -127,7 +125,7 @@ const gearInventory = [
 
 .gear-card__price {
   font-weight: 800;
-  color: #7affd8;
+  color: var(--night-accent);
 }
 
 .gear-card__title {
@@ -136,6 +134,6 @@ const gearInventory = [
 
 .gear-card__notes {
   margin: 0;
-  color: #b7c8ef;
+  color: var(--night-muted);
 }
 </style>

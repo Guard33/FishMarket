@@ -159,12 +159,12 @@ const placeOrder = () => {
 }
 
 .lede {
-  color: #9fb6d7;
+  color: var(--night-muted);
 }
 
 .empty {
   margin-top: 12px;
-  background: var(--night-surface);
+  background: #ffffff;
   border: 1px solid var(--night-border);
   border-radius: 14px;
   padding: 14px;
@@ -174,7 +174,7 @@ const placeOrder = () => {
 }
 
 .panel {
-  background: var(--night-surface);
+  background: #ffffff;
   border: 1px solid var(--night-border);
   border-radius: 16px;
   padding: 16px;
@@ -193,7 +193,7 @@ const placeOrder = () => {
 
 .panel__copy {
   margin: 0;
-  color: #9fb6d7;
+  color: var(--night-muted);
 }
 
 .form {
@@ -214,7 +214,7 @@ const placeOrder = () => {
   border-radius: 10px;
   border: 1px solid rgba(255, 255, 255, 0.12);
   background: rgba(255, 255, 255, 0.04);
-  color: #e6edf7;
+  color: var(--night-text);
 }
 
 .two-col {
@@ -255,7 +255,7 @@ const placeOrder = () => {
 .summary__item {
   display: flex;
   justify-content: space-between;
-  background: rgba(12, 10, 24, 0.55);
+  background: #ffffff;
   border: 1px solid var(--night-border);
   border-radius: 12px;
   padding: 10px;
@@ -268,7 +268,7 @@ const placeOrder = () => {
 
 .summary__meta {
   margin: 0;
-  color: #9fb6d7;
+  color: var(--night-muted);
 }
 
 .summary__price {
@@ -278,7 +278,7 @@ const placeOrder = () => {
 
 .summary__empty {
   margin: 0;
-  color: #9fb6d7;
+  color: var(--night-muted);
 }
 
 .summary-row {

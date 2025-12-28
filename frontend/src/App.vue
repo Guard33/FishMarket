@@ -2,6 +2,7 @@
 import { computed, onMounted, ref } from 'vue'
 import { RouterLink, RouterView, useRoute } from 'vue-router'
 import { useAuth } from './composables/useAuth'
+import logoUrl from './assets/fishmarket-logo.png'
 
 const route = useRoute()
 const { authUser, initGoogleButton, isAuthenticated, signOut } = useAuth()
@@ -32,7 +33,9 @@ onMounted(() => {
     <header class="hero">
       <div class="hero__bar">
         <div class="brand">
-          <div class="brand__mark">FM</div>
+          <div class="brand__mark">
+            <img :src="logoUrl" alt="Fish Market logo" class="brand__logo" />
+          </div>
           <div>
             <p class="brand__eyebrow">Tide & Scale</p>
             <p class="brand__title">Fish Market</p>
@@ -65,11 +68,11 @@ onMounted(() => {
       </div>
       <div class="hero__content">
         <div>
-          <p class="hero__eyebrow">Night market | fresh catch</p>
-          <h1 class="hero__headline">Neon-lit seafood, dock-to-door</h1>
+          <p class="hero__eyebrow">Fresh catch | harbor market</p>
+          <h1 class="hero__headline">Market-day seafood, dock-to-door</h1>
           <p class="hero__copy">
-            Browse glowing seasonal fish, build a cart, and gear up for the midnight tide. Filter
-            by price, weight, or length to match your next recipe.
+            Browse seasonal fish, build a cart, and gear up for the next tide. Filter by price,
+            weight, or length to match your recipe.
           </p>
           <div class="hero__actions">
             <RouterLink to="/" class="btn btn--primary">Shop todays catch</RouterLink>
@@ -91,7 +94,7 @@ onMounted(() => {
     </main>
 
     <footer class="footer">
-      <p>Cold packed in under 24 hours. Coastal dispatch under neon lanterns.</p>
+      <p>Cold packed in under 24 hours. Coastal dispatch from Monterey.</p>
       <p class="footer__meta">Support: dock@fishmarket.co · (831) 555-0172</p>
     </footer>
   </div>
@@ -99,14 +102,14 @@ onMounted(() => {
 
 <style scoped>
 :global(:root) {
-  --night-bg: #07060f;
-  --night-surface: rgba(12, 10, 24, 0.72);
-  --night-border: rgba(255, 255, 255, 0.08);
-  --night-text: #e8f0ff;
-  --night-muted: #9aa8c7;
-  --night-accent: #7affd8;
-  --night-accent-strong: #00ffd1;
-  --night-magenta: #ff4dff;
+  --night-bg: #ffffff;
+  --night-surface: #ffffff;
+  --night-border: #e7e2d9;
+  --night-text: #1f1b16;
+  --night-muted: #6f665b;
+  --night-accent: #0f8f8a;
+  --night-accent-strong: #0aa09a;
+  --night-magenta: #e8d9c4;
 }
 
 :global(body) {
@@ -119,9 +122,9 @@ onMounted(() => {
 .app-shell {
   min-height: 100vh;
   background:
-    radial-gradient(120% 80% at 15% 10%, rgba(31, 10, 40, 0.8) 0%, transparent 60%),
-    radial-gradient(120% 80% at 85% 0%, rgba(0, 255, 209, 0.08) 0%, transparent 60%),
-    linear-gradient(140deg, #05050b 0%, #0a0d1c 60%, #07060f 100%);
+    radial-gradient(120% 80% at 20% 0%, rgba(15, 143, 138, 0.08) 0%, transparent 60%),
+    radial-gradient(120% 80% at 90% 10%, rgba(232, 217, 196, 0.18) 0%, transparent 60%),
+    linear-gradient(140deg, #ffffff 0%, #faf7f2 60%, #ffffff 100%);
   display: flex;
   flex-direction: column;
 }
@@ -146,20 +149,27 @@ onMounted(() => {
 }
 
 .brand__mark {
-  width: 44px;
-  height: 44px;
+  width: 58px;
+  height: 58px;
   border-radius: 14px;
-  background: linear-gradient(140deg, #00ffd1 0%, #44b7ff 55%, #ff4dff 100%);
-  color: #05050b;
+  background: #ffffff;
+  border: 1px solid var(--night-border);
   display: grid;
   place-items: center;
-  font-weight: 800;
-  letter-spacing: 0.08em;
-  box-shadow: 0 10px 30px rgba(255, 77, 255, 0.25);
+  box-shadow: 0 10px 24px rgba(31, 27, 23, 0.12);
+  overflow: hidden;
+}
+
+.brand__logo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  transform: scale(1.25);
 }
 
 .brand__eyebrow {
-  color: #6bf5ff;
+  color: var(--night-muted);
   text-transform: uppercase;
   font-size: 12px;
   margin: 0;
@@ -184,7 +194,7 @@ onMounted(() => {
 }
 
 .nav__link {
-  color: #d7e5ff;
+  color: #2f2822;
   text-decoration: none;
   padding: 8px 14px;
   border-radius: 12px;
@@ -194,14 +204,15 @@ onMounted(() => {
 }
 
 .nav__link:hover {
-  border-color: rgba(255, 255, 255, 0.08);
-  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(47, 40, 34, 0.12);
+  background: #ffffff;
 }
 
 .nav__link--active {
-  background: linear-gradient(120deg, #00ffd1, #ff4dff);
-  color: #05050b;
-  box-shadow: 0 10px 25px rgba(255, 77, 255, 0.25);
+  background: #e9f6f5;
+  color: #1f1b17;
+  border-color: rgba(15, 143, 138, 0.2);
+  box-shadow: 0 10px 25px rgba(15, 143, 138, 0.2);
 }
 
 .hero__content {
@@ -212,7 +223,7 @@ onMounted(() => {
 }
 
 .hero__eyebrow {
-  color: #7affd8;
+  color: var(--night-accent);
   text-transform: uppercase;
   letter-spacing: 0.12em;
   font-size: 12px;
@@ -222,7 +233,7 @@ onMounted(() => {
 .hero__headline {
   font-size: clamp(26px, 5vw, 40px);
   margin: 0 0 12px;
-  color: #f5fbff;
+  color: var(--night-text);
 }
 
 .hero__copy {
@@ -249,20 +260,20 @@ onMounted(() => {
 }
 
 .btn--primary {
-  background: linear-gradient(120deg, #00ffd1, #ff4dff);
-  color: #05050b;
-  box-shadow: 0 12px 30px rgba(255, 77, 255, 0.35);
+  background: linear-gradient(120deg, #0f8f8a, #0aa09a);
+  color: #ffffff;
+  box-shadow: 0 12px 30px rgba(15, 143, 138, 0.25);
 }
 
 .btn--ghost {
-  color: #d7e5ff;
-  border-color: rgba(255, 255, 255, 0.18);
-  background: rgba(255, 255, 255, 0.03);
+  color: #2f2822;
+  border-color: rgba(47, 40, 34, 0.16);
+  background: rgba(255, 255, 255, 0.8);
 }
 
 .btn:hover {
   transform: translateY(-1px);
-  box-shadow: 0 14px 30px rgba(0, 255, 209, 0.25);
+  box-shadow: 0 14px 30px rgba(15, 143, 138, 0.2);
 }
 
 .hero__card {
@@ -278,7 +289,7 @@ onMounted(() => {
   font-size: 12px;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: #7affd8;
+  color: var(--night-accent);
   margin: 0 0 6px;
 }
 
@@ -322,7 +333,7 @@ onMounted(() => {
   display: flex;
   align-items: center;
   gap: 10px;
-  background: rgba(12, 10, 24, 0.6);
+  background: #ffffff;
   border: 1px solid var(--night-border);
   padding: 6px 10px;
   border-radius: 999px;
@@ -332,7 +343,7 @@ onMounted(() => {
   width: 30px;
   height: 30px;
   border-radius: 50%;
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(47, 40, 34, 0.2);
 }
 
 .auth__name {
@@ -344,7 +355,7 @@ onMounted(() => {
 .auth__logout {
   background: transparent;
   border: none;
-  color: #7affd8;
+  color: var(--night-accent);
   font-size: 12px;
   cursor: pointer;
   padding: 0;

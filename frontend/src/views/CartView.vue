@@ -91,12 +91,12 @@ const total = computed(() => subtotal.value + shipping.value)
 }
 
 .lede {
-  color: #9fb6d7;
+  color: var(--night-muted);
   margin-bottom: 12px;
 }
 
 .empty {
-  background: var(--night-surface);
+  background: #ffffff;
   border: 1px solid var(--night-border);
   border-radius: 14px;
   padding: 14px;
@@ -113,7 +113,7 @@ const total = computed(() => subtotal.value + shipping.value)
 }
 
 .item {
-  background: var(--night-surface);
+  background: #ffffff;
   border: 1px solid var(--night-border);
   border-radius: 14px;
   padding: 12px;
@@ -126,7 +126,7 @@ const total = computed(() => subtotal.value + shipping.value)
   margin: 0;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  color: #7bd6ff;
+  color: var(--night-accent);
   font-size: 12px;
 }
 
@@ -137,7 +137,7 @@ const total = computed(() => subtotal.value + shipping.value)
 
 .item__meta {
   margin: 0;
-  color: #9fb6d7;
+  color: var(--night-muted);
 }
 
 .item__controls {
@@ -153,7 +153,7 @@ const total = computed(() => subtotal.value + shipping.value)
   border-radius: 10px;
   border: 1px solid rgba(255, 255, 255, 0.12);
   background: rgba(255, 255, 255, 0.04);
-  color: #e6edf7;
+  color: var(--night-text);
 }
 
 .item__price {
@@ -162,7 +162,7 @@ const total = computed(() => subtotal.value + shipping.value)
 }
 
 .panel {
-  background: var(--night-surface);
+  background: #ffffff;
   border: 1px solid var(--night-border);
   border-radius: 16px;
   padding: 16px;
@@ -183,7 +183,7 @@ const total = computed(() => subtotal.value + shipping.value)
 
 .panel__copy {
   margin: 0;
-  color: #9fb6d7;
+  color: var(--night-muted);
 }
 
 .summary-row {

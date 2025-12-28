@@ -107,7 +107,7 @@ const submit = () => {
 }
 
 .lede {
-  color: #9fb6d7;
+  color: var(--night-muted);
   max-width: 540px;
 }
 
@@ -122,7 +122,7 @@ const submit = () => {
   margin: 0;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  color: #7bd6ff;
+  color: var(--night-accent);
   font-size: 12px;
 }
 
@@ -132,7 +132,7 @@ const submit = () => {
 }
 
 .panel {
-  background: var(--night-surface);
+  background: #ffffff;
   border: 1px solid var(--night-border);
   border-radius: 16px;
   padding: 16px;
@@ -151,7 +151,7 @@ const submit = () => {
 
 .panel__copy {
   margin: 0;
-  color: #9fb6d7;
+  color: var(--night-muted);
 }
 
 .field {
@@ -169,7 +169,7 @@ const submit = () => {
   border-radius: 10px;
   border: 1px solid rgba(255, 255, 255, 0.12);
   background: rgba(255, 255, 255, 0.04);
-  color: #e6edf7;
+  color: var(--night-text);
 }
 
 .success {

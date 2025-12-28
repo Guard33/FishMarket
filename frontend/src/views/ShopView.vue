@@ -214,7 +214,7 @@ onMounted(async () => {
 }
 
 .panel {
-  background: var(--night-surface);
+  background: #ffffff;
   border: 1px solid var(--night-border);
   border-radius: 16px;
   padding: 16px;
@@ -234,7 +234,7 @@ onMounted(async () => {
 
 .panel__copy {
   margin: 0;
-  color: #9fb6d7;
+  color: var(--night-muted);
 }
 
 .panel__footer {
@@ -242,7 +242,7 @@ onMounted(async () => {
   justify-content: space-between;
   align-items: center;
   margin-top: 12px;
-  color: #9fb6d7;
+  color: var(--night-muted);
 }
 
 .pill {
@@ -266,7 +266,7 @@ onMounted(async () => {
   margin-top: 12px;
   padding: 10px;
   border-radius: 12px;
-  background: rgba(12, 10, 24, 0.55);
+  background: #ffffff;
   border: 1px solid var(--night-border);
 }
 
@@ -283,7 +283,7 @@ onMounted(async () => {
 
 .filter__value {
   margin: 0;
-  color: #9fb6d7;
+  color: var(--night-muted);
 }
 
 .filter input[type='range'] {
@@ -298,14 +298,14 @@ onMounted(async () => {
   border-radius: 10px;
   border: 1px solid rgba(255, 255, 255, 0.12);
   background: rgba(255, 255, 255, 0.04);
-  color: #e6edf7;
+  color: var(--night-text);
   box-sizing: border-box;
 }
 
 .filter__scale {
   display: flex;
   justify-content: space-between;
-  color: #7e98ba;
+  color: var(--night-muted);
   font-size: 12px;
 }
 
@@ -323,7 +323,7 @@ onMounted(async () => {
 }
 
 .products {
-  background: rgba(12, 10, 24, 0.55);
+  background: #ffffff;
   border: 1px solid var(--night-border);
   border-radius: 18px;
   padding: 18px;
@@ -344,7 +344,7 @@ onMounted(async () => {
 
 .products__copy {
   margin: 0;
-  color: #9fb6d7;
+  color: var(--night-muted);
 }
 
 .product-grid {
@@ -356,9 +356,9 @@ onMounted(async () => {
 .status {
   padding: 18px;
   border-radius: 14px;
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  color: #c8ddf9;
+  background: #ffffff;
+  border: 1px solid var(--night-border);
+  color: var(--night-muted);
   font-weight: 600;
 }
 
@@ -371,9 +371,9 @@ onMounted(async () => {
   position: relative;
   border-radius: 16px;
   padding: 14px;
-  background: linear-gradient(150deg, rgba(0, 255, 209, 0.08), rgba(255, 77, 255, 0.08));
+  background: #ffffff;
   border: 1px solid var(--night-border);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08), 0 20px 40px rgba(6, 5, 15, 0.6);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.6), 0 18px 32px rgba(31, 27, 23, 0.08);
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -385,7 +385,7 @@ onMounted(async () => {
   right: 10px;
   padding: 6px 10px;
   border-radius: 10px;
-  background: #05050b;
+  background: #ffffff;
   color: var(--night-accent);
   font-weight: 800;
   font-size: 12px;
@@ -395,7 +395,7 @@ onMounted(async () => {
   margin: 0;
   text-transform: uppercase;
   font-size: 12px;
-  color: #7bd6ff;
+  color: var(--night-accent);
   letter-spacing: 0.08em;
 }
 
@@ -405,7 +405,7 @@ onMounted(async () => {
 
 .card__notes {
   margin: 0;
-  color: #c8ddf9;
+  color: var(--night-muted);
 }
 
 .card__meta {
@@ -419,9 +419,9 @@ onMounted(async () => {
 .card__meta span {
   padding: 6px 10px;
   border-radius: 10px;
-  background: rgba(12, 16, 27, 0.4);
-  color: #d7e5ff;
-  border: 1px solid rgba(255, 255, 255, 0.06);
+  background: rgba(15, 143, 138, 0.08);
+  color: #2f2822;
+  border: 1px solid var(--night-border);
 }
 
 .card__actions {
