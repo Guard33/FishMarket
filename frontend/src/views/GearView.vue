@@ -1,10 +1,12 @@
 <script setup>
 import { onMounted, ref } from 'vue'
 import { apiBaseUrl } from '../composables/useAuth'
+import { useCart } from '../composables/useCart'
 
 const gearInventory = ref([])
 const loading = ref(true)
 const error = ref('')
+const { addToCart } = useCart()
 
 onMounted(async () => {
   try {
@@ -41,7 +43,7 @@ onMounted(async () => {
         <div class="gear-card__price">${{ item.price }}</div>
         <h3 class="gear-card__title">{{ item.name }}</h3>
         <p class="gear-card__notes">{{ item.notes }}</p>
-        <button class="btn btn--ghost">Add to gear list</button>
+        <button class="btn btn--ghost" @click="addToCart(item)">Add to cart</button>
       </article>
     </div>
   </section>
