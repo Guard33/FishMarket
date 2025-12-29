@@ -1,6 +1,8 @@
+import axios from 'axios'
 import { computed, ref } from 'vue'
 
 export const apiBaseUrl = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8080'
+export const apiClient = axios.create({ baseURL: apiBaseUrl })
 const googleClientId = import.meta.env.VITE_GOOGLE_CLIENT_ID || ''
 
 const authToken = ref(localStorage.getItem('auth_token') || '')
@@ -27,25 +29,16 @@ const clearAuth = () => {
   }
 }
 
-const authorizedFetch = (path, options = {}) => {
-  const headers = new Headers(options.headers || {})
-  headers.set('Content-Type', headers.get('Content-Type') || 'application/json')
+const authorizedRequest = (config) => {
+  const headers = { ...(config.headers || {}) }
   if (authToken.value) {
-    headers.set('Authorization', `Bearer ${authToken.value}`)
+    headers.Authorization = `Bearer ${authToken.value}`
   }
-  return fetch(`${apiBaseUrl}${path}`, { ...options, headers })
+  return apiClient({ ...config, headers })
 }
 
 const signInWithGoogle = async (credential) => {
-  const response = await fetch(`${apiBaseUrl}/api/auth/google`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ token: credential }),
-  })
-  if (!response.ok) {
-    throw new Error('Unable to sign in with Google.')
-  }
-  const data = await response.json()
+  const { data } = await apiClient.post('/api/auth/google', { token: credential })
   setAuth(data.token, { name: data.name, email: data.email, avatarUrl: data.avatarUrl })
 }
 
@@ -109,6 +102,6 @@ export function useAuth() {
     isAuthenticated,
     initGoogleButton,
     signOut: clearAuth,
-    authorizedFetch,
+    authorizedRequest,
   }
 }

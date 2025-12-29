@@ -1,6 +1,6 @@
 <script setup>
 import { onMounted, ref } from 'vue'
-import { apiBaseUrl } from '../composables/useAuth'
+import { apiClient } from '../composables/useAuth'
 import { useCart } from '../composables/useCart'
 
 const gearInventory = ref([])
@@ -10,11 +10,8 @@ const { addToCart } = useCart()
 
 onMounted(async () => {
   try {
-    const response = await fetch(`${apiBaseUrl}/api/gear`)
-    if (!response.ok) {
-      throw new Error('Unable to load fishing gear.')
-    }
-    gearInventory.value = await response.json()
+    const { data } = await apiClient.get('/api/gear')
+    gearInventory.value = data
   } catch (err) {
     error.value = err instanceof Error ? err.message : 'Unable to load fishing gear.'
   } finally {

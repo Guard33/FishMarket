@@ -50,15 +50,16 @@ const subtotal = computed(() =>
   cartItems.value.reduce((total, item) => total + item.price * item.quantity, 0),
 )
 
-const persistCart = (authorizedFetch) => {
+const persistCart = (authorizedRequest) => {
   if (saveTimeout.value) {
     clearTimeout(saveTimeout.value)
   }
   saveTimeout.value = setTimeout(async () => {
     try {
-      await authorizedFetch('/api/cart', {
+      await authorizedRequest({
         method: 'PUT',
-        body: JSON.stringify(cartItems.value),
+        url: '/api/cart',
+        data: cartItems.value,
       })
     } catch {
       localStorage.setItem('cart_items', JSON.stringify(cartItems.value))
@@ -67,14 +68,13 @@ const persistCart = (authorizedFetch) => {
 }
 
 export function useCart() {
-  const { authToken, isAuthenticated, authorizedFetch } = useAuth()
+  const { authToken, isAuthenticated, authorizedRequest } = useAuth()
 
   if (!isHydrated.value) {
     isHydrated.value = true
     if (isAuthenticated.value) {
-      authorizedFetch('/api/cart')
-        .then((response) => response.json())
-        .then((data) => {
+      authorizedRequest({ method: 'GET', url: '/api/cart' })
+        .then(({ data }) => {
           try {
             cartItems.value = JSON.parse(data.cartJson || '[]')
           } catch {
@@ -93,9 +93,8 @@ export function useCart() {
       () => authToken.value,
       (token) => {
         if (token) {
-          authorizedFetch('/api/cart')
-            .then((response) => response.json())
-            .then((data) => {
+          authorizedRequest({ method: 'GET', url: '/api/cart' })
+            .then(({ data }) => {
               try {
                 cartItems.value = JSON.parse(data.cartJson || '[]')
               } catch {
@@ -113,7 +112,7 @@ export function useCart() {
       cartItems,
       () => {
         if (isAuthenticated.value) {
-          persistCart(authorizedFetch)
+          persistCart(authorizedRequest)
         } else {
           localStorage.setItem('cart_items', JSON.stringify(cartItems.value))
         }

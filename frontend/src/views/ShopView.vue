@@ -2,6 +2,7 @@
 import { computed, onMounted, ref, watch } from 'vue'
 import { RouterLink } from 'vue-router'
 import { useCart } from '../composables/useCart'
+import { apiClient } from '../composables/useAuth'
 
 const { addToCart, itemCount, subtotal } = useCart()
 
@@ -65,15 +66,9 @@ const filteredFish = computed(() =>
   }),
 )
 
-const apiBaseUrl = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8080'
-
 onMounted(async () => {
   try {
-    const response = await fetch(`${apiBaseUrl}/api/fish`)
-    if (!response.ok) {
-      throw new Error('Unable to load fish inventory.')
-    }
-    const data = await response.json()
+    const { data } = await apiClient.get('/api/fish')
     fishInventory.value = data.map((fish) => ({
       ...fish,
       price: Number(fish.price),
