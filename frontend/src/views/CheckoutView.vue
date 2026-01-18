@@ -37,6 +37,7 @@ const placeOrder = async () => {
     const orderData = {
       description: `Order for ${form.value.fullName} - ${cartItems.value.length} items`,
       receipt: {
+        orderId: `FM-${Date.now()}`,
         customer: {
           name: form.value.fullName,
           email: form.value.email,
@@ -47,7 +48,12 @@ const placeOrder = async () => {
         taxes: subtotal.value * taxesRate,
         shipping: cartItems.value.length ? shipping : 0,
         total: total.value,
-        paymentMethod: form.value.payment
+        status: 'Shipped',
+        shippingMethod: 'Insulated cold-pack delivery',
+        estimatedDelivery: '2-3 business days',
+        trackingNumber: `TRK-${Math.random().toString(36).substr(2, 9).toUpperCase()}`,
+        orderDate: new Date().toISOString(),
+        note: 'Thank you for your order! Your fresh seafood will be delivered with ice packs to maintain optimal temperature.'
       }
     }
 
