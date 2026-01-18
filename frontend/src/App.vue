@@ -16,6 +16,7 @@ const navLinks = [
   { label: 'Contact', to: '/contact' },
   { label: 'Cart', to: '/cart' },
   { label: 'Checkout', to: '/checkout' },
+  { label: 'History', to: '/history' },
 ]
 
 const currentLabel = computed(() => {

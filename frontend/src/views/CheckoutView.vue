@@ -243,14 +243,14 @@ const placeOrder = async () => {
   display: flex;
   flex-direction: column;
   gap: 6px;
-  color: #d7e5ff;
+  color: var(--night-text);
 }
 
 .field input {
   padding: 10px;
   border-radius: 10px;
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--night-border);
+  background: #ffffff;
   color: var(--night-text);
 }
 
