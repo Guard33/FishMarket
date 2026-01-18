@@ -10,7 +10,7 @@ const fishInventory = ref([])
 const loading = ref(true)
 const error = ref('')
 
-//const
+//constants
 const maxPriceInData = computed(() =>
   fishInventory.value.length ? Math.max(...fishInventory.value.map((item) => item.price)) : 0,
 )
