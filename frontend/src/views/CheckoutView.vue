@@ -2,6 +2,7 @@
 import { computed, ref } from 'vue'
 import { RouterLink } from 'vue-router'
 import { useCart } from '../composables/useCart'
+import { useAuth } from '../composables/useAuth'
 
 const { cartItems, subtotal, clearCart } = useCart()
 const { authorizedRequest } = useAuth()
@@ -28,9 +29,42 @@ const total = computed(() => {
   return subtotal.value + taxes + shippingCost
 })
 
-const placeOrder = () => {
-  placed.value = true
-  clearCart()
+const placeOrder = async () => {
+  if (placing.value) return
+  placing.value = true
+
+  try {
+    const orderData = {
+      description: `Order for ${form.value.fullName} - ${cartItems.value.length} items`,
+      receipt: {
+        customer: {
+          name: form.value.fullName,
+          email: form.value.email,
+          address: `${form.value.address}, ${form.value.city}, ${form.value.state} ${form.value.postal}`
+        },
+        items: cartItems.value,
+        subtotal: subtotal.value,
+        taxes: subtotal.value * taxesRate,
+        shipping: cartItems.value.length ? shipping : 0,
+        total: total.value,
+        paymentMethod: form.value.payment
+      }
+    }
+
+    await authorizedRequest({
+      method: 'POST',
+      url: '/api/orders',
+      data: orderData
+    })
+
+    placed.value = true
+    clearCart()
+  } catch (error) {
+    console.error('Failed to place order:', error)
+    alert('Failed to place order. Please try again.')
+  } finally {
+    placing.value = false
+  }
 }
 </script>
 
