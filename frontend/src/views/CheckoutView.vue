@@ -1,32 +1,10 @@
-display: flex;
-  align-items: center;
-  gap: 8px;
-  cursor: pointer;
-  font-weight: normal;
-}
-
-.checkbox-label input {
-  width: auto;
-  margin: 0;
-}
+description: `Order for ${cartItems.value.length} item(s) - Total: $${total.value.toFixed(2)}`,
+      receipt: receipt
+    }
 =======
-.checkbox-label {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  cursor: pointer;
-  font-weight: normal;
-}
-
-.checkbox-label input {
-  width: auto;
-  margin: 0;
-}
-
-.payment-fields {
-  margin-top: 10px;
-  padding: 15px;
-  background: rgba(255, 255, 255, 0.05);
-  border-radius: 10px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-}
+    const orderData = {
+      description: `Order for ${cartItems.value.length} item(s) - Total: $${total.value.toFixed(2)}`,
+      receipt: receipt,
+      saveInfo: form.value.saveInfo,
+      receiptEmail: form.value.receiptEmail
+    }

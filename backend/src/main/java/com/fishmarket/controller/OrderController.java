@@ -23,12 +23,14 @@ public class OrderController {
     private final OrderRepository orderRepository;
     private final UserAccountRepository userAccountRepository;
     private final ObjectMapper objectMapper;
+    private final EmailService emailService;
 
     public OrderController(OrderRepository orderRepository, UserAccountRepository userAccountRepository,
-            ObjectMapper objectMapper) {
+            ObjectMapper objectMapper, EmailService emailService) {
         this.orderRepository = orderRepository;
         this.userAccountRepository = userAccountRepository;
         this.objectMapper = objectMapper;
+        this.emailService = emailService;
     }
 
     @GetMapping
@@ -42,9 +44,27 @@ public class OrderController {
     public OrderResponse placeOrder(@RequestBody OrderRequest orderRequest, Authentication authentication)
             throws JsonProcessingException {
         UserAccount account = resolveAccount(authentication);
+
+        // Process payment with Stripe (dummy implementation)
+        String paymentIntentId = stripeService.createPaymentIntent(orderRequest.receipt());
+
+        // Save address and payment info if requested
+        if (orderRequest.saveInfo()) {
+            // In a real implementation, you'd save this to a separate table
+            // For now, we'll just log it
+            System.out.println("Saving payment info for user: " + account.getId());
+        }
+
         String receiptJson = objectMapper.writeValueAsString(orderRequest.receipt());
         Order order = new Order(account, orderRequest.description(), receiptJson);
         order = orderRepository.save(order);
+
+        // Send receipt email if email provided
+        if (orderRequest.receiptEmail() != null && !orderRequest.receiptEmail().isEmpty()) {
+            String emailContent = emailService.generateReceiptEmailContent(orderRequest.receipt());
+            emailService.sendReceiptEmail(orderRequest.receiptEmail(), "Your Fish Market Order Receipt", emailContent);
+        }
+
         return new OrderResponse(order);
     }
 
@@ -62,7 +82,7 @@ public class OrderController {
         }
     }
 
-    public record OrderRequest(String description, Object receipt) {
+    public record OrderRequest(String description, Object receipt, boolean saveInfo, String receiptEmail) {
     }
 
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
