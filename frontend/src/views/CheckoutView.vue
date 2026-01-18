@@ -4,6 +4,7 @@ import { RouterLink } from 'vue-router'
 import { useCart } from '../composables/useCart'
 
 const { cartItems, subtotal, clearCart } = useCart()
+const { authorizedRequest } = useAuth()
 
 const shipping = 9.5
 const taxesRate = 0.08
@@ -19,6 +20,7 @@ const form = ref({
 })
 
 const placed = ref(false)
+const placing = ref(false)
 
 const total = computed(() => {
   const taxes = subtotal.value * taxesRate
@@ -95,7 +97,8 @@ const placeOrder = () => {
           </div>
         </div>
 
-        <button class="btn btn--primary" type="submit">Place order</button>
+        <button class="btn btn--primary" type="submit" :disabled="placing">Place order</button>
+        <p v-if="placing" class="placing">Placing order...</p>
         <p v-if="placed" class="success">
           Order placed! You will receive confirmation and tracking soon.
         </p>
@@ -235,6 +238,12 @@ const placeOrder = () => {
 
 .success {
   color: #63e6be;
+  margin: 0;
+  font-weight: 700;
+}
+
+.placing {
+  color: #d7e5ff;
   margin: 0;
   font-weight: 700;
 }
