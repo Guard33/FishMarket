@@ -6,31 +6,44 @@ import com.fishmarket.model.Order;
 import com.fishmarket.model.UserAccount;
 import com.fishmarket.repository.OrderRepository;
 import com.fishmarket.repository.UserAccountRepository;
+import com.fishmarket.service.EmailService;
+import com.fishmarket.service.StripeService;
 import java.util.List;
 import java.util.Optional;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.security.core.Authentication;
 
 @RestController
 @RequestMapping("/api/orders")
 public class OrderController {
+
+    private static final Logger log = LoggerFactory.getLogger(OrderController.class);
+
     private final OrderRepository orderRepository;
     private final UserAccountRepository userAccountRepository;
     private final ObjectMapper objectMapper;
     private final EmailService emailService;
+    private final StripeService stripeService;
 
-    public OrderController(OrderRepository orderRepository, UserAccountRepository userAccountRepository,
-            ObjectMapper objectMapper, EmailService emailService) {
+    public OrderController(
+            OrderRepository orderRepository,
+            UserAccountRepository userAccountRepository,
+            ObjectMapper objectMapper,
+            EmailService emailService,
+            StripeService stripeService) {
         this.orderRepository = orderRepository;
         this.userAccountRepository = userAccountRepository;
         this.objectMapper = objectMapper;
         this.emailService = emailService;
+        this.stripeService = stripeService;
     }
 
     @GetMapping
@@ -43,26 +56,43 @@ public class OrderController {
     @PostMapping
     public OrderResponse placeOrder(@RequestBody OrderRequest orderRequest, Authentication authentication)
             throws JsonProcessingException {
+
         UserAccount account = resolveAccount(authentication);
 
-        // Process payment with Stripe (dummy implementation)
+        // Process payment with Stripe (dummy/stub)
         String paymentIntentId = stripeService.createPaymentIntent(orderRequest.receipt());
+        log.info("Stripe payment processing (stub). paymentIntentId={}", paymentIntentId);
 
         // Save address and payment info if requested
         if (orderRequest.saveInfo()) {
-            // In a real implementation, you'd save this to a separate table
-            // For now, we'll just log it
-            System.out.println("Saving payment info for user: " + account.getId());
+            // In a real implementation, you'd save this to a separate table.
+            log.info("Saving payment info for userId={}", account.getId());
         }
 
         String receiptJson = objectMapper.writeValueAsString(orderRequest.receipt());
-        Order order = new Order(account, orderRequest.description(), receiptJson);
+
+        // Temporary: include paymentIntentId in description so it's not lost.
+        // Better: add a field on Order entity later.
+        String finalDescription = orderRequest.description();
+        if (paymentIntentId != null && !paymentIntentId.isBlank()) {
+            finalDescription = finalDescription + " (paymentIntentId=" + paymentIntentId + ")";
+        }
+
+        Order order = new Order(account, finalDescription, receiptJson);
         order = orderRepository.save(order);
 
-        // Send receipt email if email provided
-        if (orderRequest.receiptEmail() != null && !orderRequest.receiptEmail().isEmpty()) {
-            String emailContent = emailService.generateReceiptEmailContent(orderRequest.receipt());
-            emailService.sendReceiptEmail(orderRequest.receiptEmail(), "Your Fish Market Order Receipt", emailContent);
+        // Send receipt email (DO NOT FAIL THE ORDER if email fails)
+        String to = orderRequest.receiptEmail();
+        if (to != null && !to.isBlank()) {
+            try {
+                String emailContent = emailService.generateReceiptEmailContent(orderRequest.receipt());
+                emailService.sendReceiptEmail(to, "Your Fish Market Order Receipt", emailContent);
+                log.info("Receipt email sent to {}", to);
+            } catch (Exception e) {
+                // This prevents the whole request from 500'ing just because SMTP is
+                // misconfigured
+                log.warn("Receipt email failed (order still placed). to={} error={}", to, e.getMessage());
+            }
         }
 
         return new OrderResponse(order);
